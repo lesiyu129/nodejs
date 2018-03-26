@@ -1,0 +1,25 @@
+{
+    "name": "Koalsy",
+    "version": "0.0.0",
+    "description": "Koa2",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js"
+    },
+    "keywords": [
+        "koa",
+        "async"
+    ],
+    "author": "Michael Liao",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/michaelliao/learn-javascript.git"
+    },
+    "dependencies": {
+        "koa": "^2.5.0",
+        "koa-bodyparser": "^4.2.0",
+        "koa-router": "^7.4.0"
+    },
+    "devDependencies": {}
+}
