@@ -4,17 +4,27 @@ const Koa = require('koa');
 
 const app = new Koa();
 
+//导入处理request的模块
 const bodyParser = require('koa-bodyparser');
 
+//模板引擎模块
+const templating = require('./templating');
+
+//导入路由便利模块
 const controllers = require('./controllers');
+
+//判断运行环境
+/**
+ * 注意：生产环境上必须配置环境变量NODE_ENV = 'production'，
+ * 而开发环境不需要配置，实际上NODE_ENV可能是undefined，
+ * 所以判断的时候，不要用NODE_ENV === 'development'。
+ */
+console.log(process.env.NODE_ENV);
+const isProduction = process.env.NODE_ENV === 'production';
 
 app.use(async (ctx, next) => {
     console.log(`${ctx.request.method} ${ctx.request.url}`); // 打印URL
-    await next(); // 调用下一个middleware
-});
-
-app.use(async (ctx, next) => {
-    const start = new Date().getTime(); // 当前时间
+    var start = new Date().getTime(); // 当前时间
     await next(); // 调用下一个middleware
     const ms = new Date().getTime() - start; // 耗费时间
     console.log(`Time: ${ms}ms`); // 打印耗费时间
@@ -29,15 +39,34 @@ app.use(async (ctx, next) => {
  */
 
 /**
+ * 处理静态文件
+ */
+if (!isProduction) {
+    let staticFiles = require('./static-files');
+    app.use(staticFiles('/static/', __dirname + '/static'));
+}
+
+/**
  *由于middleware(中间键)的顺序很重要，这个koa-bodyparser必须在router之前被注册到app对象上
  */
 app.use(bodyParser());
+
+/**
+ * 调用模板引擎
+ */
+app.use(templating('views', {
+    noCache: !isProduction,
+    watch: !isProduction
+}));
 
 /**
  *便利路由 
  */
 app.use(controllers());
 
+/**
+ * 启动服务
+ */
 app.listen(3000, () => {
     console.log('app started at port 3000...');
 });
