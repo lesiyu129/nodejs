@@ -1,0 +1,6 @@
+{
+    "name": "WS",
+    "dependencies": {
+        "ws": "^5.1.1"
+    }
+}
