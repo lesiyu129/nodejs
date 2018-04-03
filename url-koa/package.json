@@ -24,7 +24,8 @@
         "mysql2": "^1.5.3",
         "mz": "^2.7.0",
         "nunjucks": "^3.1.2",
-        "sequelize": "^4.37.4"
+        "sequelize": "^4.37.4",
+        "ws": "^5.1.1"
     },
     "devDependencies": {}
 }
