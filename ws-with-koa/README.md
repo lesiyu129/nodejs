@@ -47,3 +47,25 @@ app.use(async (ctx, next) => {
 #数据表的自动建立。
 执行 ： node init-db.js
 程序将自动在数据库中创建表
+
+# WebSocket。
+webSocket 5.0.0版本更新了 
+* 1 connection 监听的回掉函数将原有的一个回调参数（ws）拆分为两个，（ws，req）;
+将原先的ws回掉中的 upgradeReq 对象，单独分离出来，形成了（req）；
+因此在使用  `let location = url.parse(ws.upgradeReq.url, true);`时，应该将其改写成为
+` let location = url.parse(req.url, true);`
+
+* 2 wss.clients 将原有的 array 修改为 set 。因此原先使用
+    `let users = clients.map(function (client) {`
+        `return client.user;`
+    `});`
+    `this.send(createMessage('list', user, users));`
+    改写为
+    `let users = new Array();`
+    `this.wss.clients.forEach(function (value) {`
+        `console.log(value.user);`
+        `users.push(value.user);`
+    `})`
+    `this.send(createMessage('list', user, users));`
+    
+    
