@@ -1,4 +1,5 @@
 "use strict"
+const http = require('http');
 
 const Koa = require('koa');
 
@@ -82,7 +83,8 @@ app.use(controllers());
 /**
  * 启动服务
  */
-let server = app.listen(3000);
+let server = http.createServer(app.callback()).listen(3000);
+// let server = app.listen(3000);
 
 /**
  * WebSocket
