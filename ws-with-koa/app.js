@@ -20,7 +20,13 @@ const ws = require('ws');
 const url = require('url');
 
 const Cookies = require('cookies');
+
+
+
 const WebSocketServer = ws.Server;
+
+//session
+var session = require('koa-session2');
 
 //判断运行环境
 /**
@@ -31,6 +37,8 @@ const WebSocketServer = ws.Server;
 console.log(process.env.NODE_ENV);
 const isProduction = process.env.NODE_ENV === 'production';
 
+
+
 app.use(async (ctx, next) => {
     console.log(`${ctx.request.method} ${ctx.request.url}`); // 打印URL
     var start = new Date().getTime(); // 当前时间
@@ -39,11 +47,15 @@ app.use(async (ctx, next) => {
     console.log(`Time: ${ms}ms`); // 打印耗费时间
 });
 
+
+
 //cookie:
 app.use(async (ctx, next) => {
     ctx.state.user = parseUser(ctx.cookies.get('name') || '');
     await next();
 });
+
+
 
 
 /**
@@ -66,6 +78,11 @@ if (!isProduction) {
  *由于middleware(中间键)的顺序很重要，这个koa-bodyparser必须在router之前被注册到app对象上
  */
 app.use(bodyParser());
+/**
+ * session
+ */
+app.keys = ['secret'] //Cookie密钥
+app.use(session())
 
 /**
  * 调用模板引擎

@@ -20,6 +20,7 @@
         "koa": "^2.5.0",
         "koa-bodyparser": "^4.2.0",
         "koa-router": "^7.4.0",
+        "koa-session2": "^2.2.5",
         "mime": "^2.2.0",
         "mysql2": "^1.5.3",
         "mz": "^2.7.0",

@@ -1,10 +1,12 @@
 const db = require('../db');
 module.exports = db.defineModel('user', {
-    email: {
-        type: db.STRING(100),
-        unique: true
-    },
-    password: db.STRING(100),
-    name: db.STRING(100),
-    gender: db.STRING(2)
+    avatarUrl: db.STRING(),
+    city: db.STRING(),
+    country: db.STRING(),
+    gender: db.STRING(2),
+    language: db.STRING(),
+    nickName: db.STRING(100),
+    openId: db.STRING(),
+    province: db.STRING()
+
 });
