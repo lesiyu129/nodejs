@@ -55,12 +55,12 @@ module.exports = {
                 openId: data.openId,
                 province: data.province
             })
+        } else {
+            ctx.body = userdata.id;
         }
 
     },
 
-    'POST /wx1': async (ctx, next) => {
-        console.log(ctx.session.user);
-    }
+    'POST /wx1': async (ctx, next) => {}
 
 };

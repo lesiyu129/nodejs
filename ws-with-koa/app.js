@@ -1,5 +1,5 @@
 "use strict"
-const http = require('http');
+const https = require('https');
 
 const Koa = require('koa');
 
@@ -26,7 +26,19 @@ const Cookies = require('cookies');
 const WebSocketServer = ws.Server;
 
 //session
-var session = require('koa-session2');
+// var session = require('koa-session2');
+var session = require('koa-generic-session');
+var MysqlStore = require('koa-mysql-session');
+var config = {
+    user: "root",
+    password: "root",
+    database: "mydb",
+    host: "localhost"
+}
+app.keys = ['sessionid']; // needed for cookie-signing,设置一个签名 Cookie 的密钥
+app.use(session({
+    store: new MysqlStore(config)
+}));
 
 //判断运行环境
 /**
@@ -81,8 +93,8 @@ app.use(bodyParser());
 /**
  * session
  */
-app.keys = ['secret'] //Cookie密钥
-app.use(session())
+
+
 
 /**
  * 调用模板引擎
@@ -100,7 +112,7 @@ app.use(controllers());
 /**
  * 启动服务
  */
-let server = http.createServer(app.callback()).listen(3000);
+let server = https.createServer(app.callback()).listen(3000);
 // let server = app.listen(3000);
 
 /**
