@@ -7,6 +7,9 @@ module.exports = db.defineModel('user', {
     language: db.STRING(),
     nickName: db.STRING(100),
     openId: db.STRING(),
-    province: db.STRING()
-
-});
+    province: db.STRING(),
+    UnionID: {
+        type: db.STRING(),
+        allowNull: true
+    }
+})

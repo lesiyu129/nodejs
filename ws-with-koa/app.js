@@ -1,6 +1,8 @@
 "use strict"
 const https = require('https');
 
+const http = require('http');
+
 const Koa = require('koa');
 
 const app = new Koa();
@@ -112,7 +114,7 @@ app.use(controllers());
 /**
  * 启动服务
  */
-let server = https.createServer(app.callback()).listen(3000);
+let server = http.createServer(app.callback()).listen(3000);
 // let server = app.listen(3000);
 
 /**

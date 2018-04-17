@@ -4,6 +4,7 @@ const WXBizDataCrypt = require('../wx/WXBizDataCrypt');
 const https = require('https');
 const fs = require('fs');
 const userModel = require('../models/usersModel')
+const score_2048Model = require('../models/score_2048Model');
 module.exports = {
     'GET /': async (ctx, next) => {
         let user = ctx.state.user;
@@ -53,14 +54,53 @@ module.exports = {
                 language: data.language,
                 nickName: data.nickName,
                 openId: data.openId,
+                unionID: data.unionID,
                 province: data.province
             })
+            userdata = await userModel.findOne({
+                where: {
+                    openId: data.openId
+                }
+            })
+            ctx.body = userdata.id;
         } else {
             ctx.body = userdata.id;
         }
 
     },
 
-    'POST /wx1': async (ctx, next) => {}
+    'POST /wx_sub': async (ctx, next) => {
+        var user_score = await score_2048Model.findOne({
+            where: {
+                userId: ctx.request.body.userId
+            }
+        })
+        if (user_score) {
+            var score_2048 = await score_2048Model.findOne({
+                where: {
+                    userId: ctx.request.body.userId
+                }
+            })
+            if (score_2048.score < ctx.request.body.score) {
+                await score_2048Model.update({
+                    score: ctx.request.body.score,
+                }, {
+                    where: {
+                        userId: ctx.request.body.userId
+                    }
+                })
+                ctx.body = '分数提交完毕';
+            }
 
+
+        } else {
+            await score_2048Model.create({
+                userId: ctx.request.body.userId,
+                score: ctx.request.body.score
+            })
+            ctx.body = '分数创建完毕';
+        }
+
+
+    }
 };
