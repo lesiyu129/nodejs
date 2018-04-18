@@ -143,7 +143,7 @@ app.use(async (ctx, next) => {
 //     passphrase: fs.readFileSync('./SSL/pfx-password.txt') //解密密钥
 // };
 // let server = https.createServer(options, app.callback()).listen(3000);
-let server = app.listen(80);
+let server = app.listen(3000);
 
 
 /**
