@@ -25,6 +25,8 @@ const url = require('url');
 
 const Cookies = require('cookies');
 
+const conf = require('./config').lsyMysql;
+
 const userModel = require('./models/usersModel')
 
 const WebSocketServer = ws.Server;
@@ -34,10 +36,10 @@ const WebSocketServer = ws.Server;
 var session = require('koa-generic-session');
 var MysqlStore = require('koa-mysql-session');
 var config = {
-    user: "root",
-    password: "root",
-    database: "mydb",
-    host: "localhost"
+    user: conf.username,
+    password: conf.password,
+    database: conf.database,
+    host: conf.options.host
 }
 app.keys = ['sessionid']; // needed for cookie-signing,设置一个签名 Cookie 的密钥
 app.use(session({
