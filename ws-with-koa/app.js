@@ -5,6 +5,8 @@ const http = require('http');
 
 const Koa = require('koa');
 
+const fs = require('fs');
+
 const app = new Koa();
 
 //导入处理request的模块
@@ -23,7 +25,7 @@ const url = require('url');
 
 const Cookies = require('cookies');
 
-
+const userModel = require('./models/usersModel')
 
 const WebSocketServer = ws.Server;
 
@@ -112,10 +114,35 @@ app.use(templating('views', {
 app.use(controllers());
 
 /**
+ * 验证
+ */
+
+app.use(async (ctx, next) => {
+    if (ctx.url = '/wx_sub') {
+        let userid = ctx.request.body.userId || ''
+        let user = await userModel.findOne({
+            where: {
+                id: userid
+            }
+        })
+        if (user) {
+            return
+        }
+        ctx.body = '不合法操作'
+    }
+    console.log(ctx.url)
+})
+
+/**
  * 启动服务
  */
-let server = http.createServer(app.callback()).listen(3000);
+var options = {
+    pfx: fs.readFileSync('./SSL/214444885880428.pfx'), //pfx证书文件
+    passphrase: fs.readFileSync('./SSL/pfx-password.txt') //解密密钥
+};
+let server = https.createServer(options, app.callback()).listen(3000);
 // let server = app.listen(3000);
+
 
 /**
  * WebSocket
