@@ -45,9 +45,9 @@
             }
         });
         //线上地址
-        // var ws = new WebSocket('ws://lesiyu129.vicp.io:44584/ws/chat');
+        var ws = new WebSocket('ws://www.lsy3d.com/ws/chat');
         //本地测试地址
-        var ws = new WebSocket('ws://localhost:3000/ws/chat');
+        // var ws = new WebSocket('ws://localhost:3000/ws/chat');
 
         ws.onmessage = function (event) {
             var data = event.data;
