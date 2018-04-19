@@ -138,12 +138,12 @@ app.use(async (ctx, next) => {
 /**
  * 启动服务
  */
-var options = {
-    key: fs.readFileSync('./SSL/1523955523876.key'), //pfx证书文件
-    cert: fs.readFileSync('./SSL/1523955523876.pem') //解密密钥
-};
-let server = https.createServer(options, app.callback()).listen(3000);
-// let server = app.listen(3000);
+// var options = {
+//     key: fs.readFileSync('./SSL/1523955523876.key'), //pfx证书文件
+//     cert: fs.readFileSync('./SSL/1523955523876.pem') //解密密钥
+// };
+// let server = https.createServer(options, app.callback()).listen(3000);
+let server = app.listen(3000);
 
 
 /**
