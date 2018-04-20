@@ -90,8 +90,9 @@ module.exports = {
                     }
                 })
                 ctx.body = '分数提交完毕';
+                return
             }
-
+            ctx.body = '为超过记录值';
 
         } else {
             await score_2048Model.create({
