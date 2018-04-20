@@ -1,5 +1,11 @@
 const db = require('../db');
 module.exports = db.defineModel('score_2048', {
-    userId: db.STRING(),
+    userId: {
+        type: db.STRING(),
+        references: {
+            model: 'user',
+            key: 'id'
+        }
+    },
     score: db.STRING()
 });

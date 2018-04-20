@@ -24,7 +24,7 @@ module.exports = {
     //     username: "root", //账户
     //     password: "root", //密码
     //     options: {
-    //         host: "lesiyu129.vicp.io", //数据库连接URL    lesiyu129.vicp.io
+    //         host: "localhost", //数据库连接URL    lesiyu129.vicp.io
     //         dialect: "mysql", //数据库使用方言
     //         port: "3306", //数据库端口号
     //         timezone: "+08:00", //时差设置

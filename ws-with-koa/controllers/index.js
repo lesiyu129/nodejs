@@ -5,6 +5,8 @@ const https = require('https');
 const fs = require('fs');
 const userModel = require('../models/usersModel')
 const score_2048Model = require('../models/score_2048Model');
+userModel.hasOne(score_2048Model);
+score_2048Model.belongsTo(userModel);
 module.exports = {
     'GET /': async (ctx, next) => {
         let user = ctx.state.user;
@@ -103,5 +105,20 @@ module.exports = {
         }
 
 
+    },
+
+    'POST /wx_list': async (ctx, next) => {
+        var user = await score_2048Model.findAll({
+            order: [
+                ['score', 'DESC']
+            ],
+
+            include: {
+                model: userModel
+            },
+
+        })
+        console.log(user)
+        ctx.body = user
     }
 };
