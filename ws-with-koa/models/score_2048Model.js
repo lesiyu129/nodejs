@@ -7,5 +7,5 @@ module.exports = db.defineModel('score_2048', {
             key: 'id'
         }
     },
-    score: db.STRING()
+    score: db.INTEGER()
 });
